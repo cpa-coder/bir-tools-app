@@ -1,8 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JsRuntime;
 
-<MudThemeProvider IsDarkMode="_isDarkMode" />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider IsDarkMode="_isDarkMode"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="0">
@@ -14,7 +15,7 @@
             <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="@ThemeLabel()"/>
         </MudTooltip>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+    <MudDrawer @bind-Open="                        _drawerOpen" Elevation="1">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">BIR Tools</MudText>
         </MudDrawerHeader>
@@ -28,6 +29,13 @@
 </MudLayout>
 
 @code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isDarkMode = await JsRuntime.InvokeAsync<bool>("preferDarkMode");
+        await base.OnInitializedAsync();
+    }
+
     bool _drawerOpen = true;
     bool _isDarkMode;
 
@@ -43,4 +51,5 @@
         var label = _isDarkMode ? "Light" : "Dark";
         return $"Switch to {label} theme";
     }
+
 }
