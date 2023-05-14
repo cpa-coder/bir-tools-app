@@ -1,0 +1,77 @@
+﻿@page "/top-withholding-agents"
+@using BirToolsApp.Shared
+@inject HttpClient Http
+<PageTitle>Top Withholding Agents</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Top Withholding Agents</MudText>
+<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+
+<MudTextField
+    Class="my-5"
+    Label="Search here..."
+    HelperText="You can search for taxpayer name or RDO."
+    Clearable="true"
+    Variant="Variant.Outlined"
+    Adornment="Adornment.End"
+    AdornmentIcon="@Icons.Material.Filled.Search"
+    AdornmentColor="Color.Primary"
+    OnAdornmentClick="SearchAsync"
+    @bind-Value="                _searchText"
+    TextChanged="SearchAsync"/>
+
+@if (_agents == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+    <MudTable Items="_agents" Hover="true" SortLabel="Sort By" Elevation="0">
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<WithholdingAgent, object>(x => x.DatePublished)">Date Published</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<WithholdingAgent, object>(x => x.Name)">Taxpayer</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<WithholdingAgent, object>(x => x.Rdo)">RDO</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<WithholdingAgent, object>(x => x.Type)">Type</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<WithholdingAgent, object>(x => x.Status)">Status</MudTableSortLabel>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Date Published">@context.DatePublished.ToShortDateString()</MudTd>
+            <MudTd DataLabel="Taxpayer">@context.Name</MudTd>
+            <MudTd DataLabel="RDO">@context.Rdo</MudTd>
+            <MudTd DataLabel="Type">@context.Type</MudTd>
+            <MudTd DataLabel="Status">@context.Status</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new[]{10, 50, 100}"/>
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    private WithholdingAgent[]? _agents;
+
+    private string _searchText = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("withholding-agents");
+    }
+
+    private async Task SearchAsync()
+    {
+        if (string.IsNullOrWhiteSpace(_searchText))
+            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("withholding-agents");
+        else
+            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>($"withholding-agents/search?term={_searchText}");
+    }
+
+}
