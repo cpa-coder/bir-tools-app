@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
+using System.Runtime.InteropServices;
 using BirToolsApp.Server;
 using ClosedXML.Excel;
 using ClosedXML.Graphics;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ if (!builder.Environment.IsDevelopment())
         options.Listen(System.Net.IPAddress.Parse(ip), 5001);
         options.Listen(System.Net.IPAddress.Parse("127.0.0.1"), 5000);
     });
+
+var windows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+if (windows) builder.Host.UseWindowsService();
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 

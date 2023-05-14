@@ -8,9 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.101.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
-		<PackageReference Include="DebitExpress.Extensions" Version="1.0.12" />
-		<PackageReference Include="DebitExpress.StringBuilders" Version="1.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
 		<PackageReference Include="MudBlazor" Version="6.1.8" />

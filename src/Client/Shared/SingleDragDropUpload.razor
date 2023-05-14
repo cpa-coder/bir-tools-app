@@ -16,13 +16,13 @@
 @code {
 
     [Parameter]
-    public string FileType { get; set; }
+    public string FileType { get; set; } = string.Empty;
 
     [Parameter]
-    public string FileName { get; set; }
+    public string FileName { get; set; }  = string.Empty;
 
     [Parameter]
-    public string FileIcon { get; set; }
+    public string FileIcon { get; set; } = string.Empty;
 
     [Parameter]
     public EventCallback<IBrowserFile> OnFileChanged { get; set; }

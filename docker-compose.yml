@@ -1,0 +1,23 @@
+﻿name: bir-tools-app
+services:
+  bir-tools-service:
+    hostname: bir-tools
+    image: birtoolsapp
+    expose:
+      - 5000
+      - 5001
+    ports:
+      - 40010:5000
+      - 40011:5001
+    networks:
+      bir-tools_net:
+        ipv4_address: 10.0.8.1
+    restart: always
+ 
+networks:
+  bir-tools_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.8.0/24
+          gateway: 10.0.8.254

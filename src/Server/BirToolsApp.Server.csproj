@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -17,6 +18,7 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Data\Carlito-Regular.ttf" />
+	  <None Include="Data\top-agents.json" />
 	</ItemGroup>
 
 </Project>
