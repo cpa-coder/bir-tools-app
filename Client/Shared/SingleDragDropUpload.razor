@@ -1,0 +1,74 @@
+﻿@inject ISnackbar Snackbar
+
+<MudFileUpload T="IBrowserFile" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+               @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
+    <ButtonTemplate>
+        <MudPaper HtmlTag="label" Height="300px" Outlined="true" Class="@_dragClass">
+            <MudStack Class="align-center">
+                <MudText Class="@InvisibleClass()" Typo="Typo.h6">@SetDragDropLabel()</MudText>
+                <MudIcon Class="@VisibleClass()" Icon="@FileIcon" Style="font-size: 10rem;"></MudIcon>
+                <MudText Class="@VisibleClass()">@_fileNames.FirstOrDefault()</MudText>
+            </MudStack>
+        </MudPaper>
+    </ButtonTemplate>
+</MudFileUpload>
+
+@code {
+
+    [Parameter]
+    public string FileType { get; set; }
+
+    [Parameter]
+    public string FileName { get; set; }
+
+    [Parameter]
+    public string FileIcon { get; set; }
+
+    [Parameter]
+    public EventCallback<IBrowserFile> OnFileChanged { get; set; }
+
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full " +
+                                            "mud-height-full z-10 d-flex justify-center align-center";
+
+    private string _dragClass = DefaultDragClass;
+    private readonly List<string> _fileNames = new();
+
+    private string SetDragDropLabel() => $"Drag and drop {FileName} file here or click";
+
+    private async Task OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        _fileNames.Clear();
+
+        var file = e.GetMultipleFiles().FirstOrDefault();
+
+        if (file == null)
+        {
+            Snackbar.Add("Invalid file", Severity.Error);
+            return;
+        }
+
+        if (file.Name.Contains(FileType))
+        {
+            _fileNames.Add(file.Name);
+            await OnFileChanged.InvokeAsync(file);
+        }
+        else
+        {
+            Snackbar.Add("Invalid file", Severity.Error);
+        }
+    }
+
+    private void SetDragClass()
+    {
+        _dragClass = $"{DefaultDragClass} mud-border-primary";
+    }
+
+    private void ClearDragClass()
+    {
+        _dragClass = DefaultDragClass;
+    }
+
+    private string VisibleClass() => _fileNames.Count == 0 ? "d-none" : "d-flex";
+    private string InvisibleClass() => _fileNames.Count > 0 ? "d-none" : "d-flex";
+}

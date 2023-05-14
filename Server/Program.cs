@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+﻿using System.Reflection;
+using BirToolsApp.Server;
+using ClosedXML.Excel;
+using ClosedXML.Graphics;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,5 +44,12 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+// ClosedXml font fallback when generating excel files
+await using (var fallbackFontStream =
+             Assembly.GetExecutingAssembly().GetManifestResourceStream("BirToolsApp.Server.Data.Carlito-Regular.ttf"))
+{
+    LoadOptions.DefaultGraphicEngine = DefaultGraphicEngine.CreateOnlyWithFonts(fallbackFontStream);
+}
 
 app.Run();

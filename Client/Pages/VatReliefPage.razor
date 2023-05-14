@@ -1,0 +1,73 @@
+﻿@page "/vat-relief"
+@inject IJSRuntime JsRuntime;
+@inject ISnackbar Snackbar; 
+@inject HttpClient Http;
+
+@using Color = MudBlazor.Color
+
+
+<PageTitle>VAT Relief</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">VAT Relief</MudText>
+<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+
+<MudButton Class="mb-100" OnClick="DownloadTemplate" StartIcon="@Icons.Material.Filled.FileDownload" Style="text-transform:none" Color="Color.Primary" Variant="Variant.Text">Download Template</MudButton>
+
+<SingleDragDropUpload FileType=".xls" FileName="excel" FileIcon="@Icons.Custom.FileFormats.FileExcel" OnFileChanged="(e) => _file = e"/>
+
+<MudStack Class="align-center">
+    <MudButton Class="gap-4 my-5"
+               StartIcon="@Icons.Material.Filled.Loop"
+               IconSize="Size.Large"
+               Disabled="@(_file == null)"
+               Color="Color.Primary"
+               Variant="Variant.Filled"
+               Style="width: 150px; height: 40px; text-transform:none;"
+               OnClick="Process">
+        Process
+    </MudButton>
+</MudStack>
+
+@code {
+
+    private IBrowserFile? _file;
+
+    private async Task DownloadTemplate()
+    {
+        const string fileName = "template.xltx";
+        const string fileUrl = "data/template.xltx";
+        await JsRuntime.InvokeVoidAsync("downloadFromUrl", fileName, fileUrl);
+        Snackbar.Add("Template has been downloaded", Severity.Info);
+    }
+
+    private async Task Process()
+    {
+        try
+        {
+            if (_file == null)
+            {
+                Snackbar.Add("Please select a file", Severity.Error);
+                return;
+            }
+
+            var formData = new MultipartFormDataContent();
+            formData.Add(new StreamContent(_file.OpenReadStream()), "excelFile", _file.Name);
+
+            var response = await Http.PostAsync("vat-relief", formData);
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsByteArrayAsync();
+
+            var fileName = $"{Guid.NewGuid().ToString().Replace("-", "")}.zip";
+            await JsRuntime.InvokeVoidAsync("downloadZip", fileName, content);
+
+            Snackbar.Add("Processing successful!", Severity.Info);
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add(e.Message, Severity.Error);
+        }
+    }
+
+}

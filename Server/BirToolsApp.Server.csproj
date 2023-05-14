@@ -15,5 +15,8 @@
 		<ProjectReference Include="..\Shared\BirToolsApp.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EmbeddedResource Include="Data\Carlito-Regular.ttf" />
+	</ItemGroup>
 
 </Project>

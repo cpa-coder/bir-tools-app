@@ -20,4 +20,8 @@
 		<ProjectReference Include="..\Shared\BirToolsApp.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="wwwroot\data\template.xltx" />
+	</ItemGroup>
+
 </Project>
