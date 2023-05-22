@@ -1,4 +1,4 @@
-namespace BirToolsApp.Server.VatReliefServices.Unidecode;
+namespace BirToolsApp.Server.VatReliefs.Unidecode;
 
 public static partial class Unidecoder
 {

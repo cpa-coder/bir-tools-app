@@ -17,7 +17,7 @@ it under the same terms as Perl.
 
 using System.Text;
 
-namespace BirToolsApp.Server.VatReliefServices.Unidecode;
+namespace BirToolsApp.Server.VatReliefs.Unidecode;
 
 public static partial class Unidecoder
 {

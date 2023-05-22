@@ -7,8 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Carter" Version="7.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

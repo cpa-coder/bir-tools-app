@@ -51,7 +51,7 @@ else
             <MudTd DataLabel="Status">@context.Status</MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new[]{10, 50, 100}"/>
+            <MudTablePager PageSizeOptions="new[]{10, 50, 100}" />
         </PagerContent>
     </MudTable>
 }
@@ -63,15 +63,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("withholding-agents");
+        _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("api/withholding-agents");
     }
 
     private async Task SearchAsync()
     {
         if (string.IsNullOrWhiteSpace(_searchText))
-            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("withholding-agents");
+            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>("api/withholding-agents");
         else
-            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>($"withholding-agents/search?term={_searchText}");
+            _agents = await Http.GetFromJsonAsync<WithholdingAgent[]>($"api/withholding-agents/{_searchText}");
     }
 
 }

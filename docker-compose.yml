@@ -4,10 +4,8 @@ services:
     hostname: bir-tools
     image: birtoolsapp
     expose:
-      - 5000
       - 5001
     ports:
-      - 40010:5000
       - 40011:5001
     networks:
       bir-tools_net:

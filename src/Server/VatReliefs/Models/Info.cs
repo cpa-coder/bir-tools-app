@@ -1,4 +1,4 @@
-﻿namespace BirToolsApp.Server.VatReliefServices.Models;
+﻿namespace BirToolsApp.Server.VatReliefs.Models;
 
 public readonly struct Info
 {

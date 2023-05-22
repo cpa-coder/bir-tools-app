@@ -9,7 +9,11 @@
 <PageTitle>VAT Relief</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">VAT Relief</MudText>
-<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+<MudText Class="mb-8">
+    VAT Relief Generator simplifies the process of generating 
+    <MudLink href="https://www.bir.gov.ph/index.php/home.html">BIR</MudLink>
+    VAT relief files in the Philippines.
+</MudText>
 
 <MudButton Class="mb-100" OnClick="DownloadTemplate" StartIcon="@Icons.Material.Filled.FileDownload" Style="text-transform:none" Color="Color.Primary" Variant="Variant.Text">Download Template</MudButton>
 
@@ -27,6 +31,10 @@
         Process
     </MudButton>
 </MudStack>
+<MudSpacer ></MudSpacer>
+<MudText Typo="Typo.h4" GutterBottom="true">Instructions</MudText>
+<MudText Class="mb-8">Coming soon...
+</MudText>
 
 @code {
 
@@ -53,7 +61,7 @@
             var formData = new MultipartFormDataContent();
             formData.Add(new StreamContent(_file.OpenReadStream()), "excelFile", _file.Name);
 
-            var response = await Http.PostAsync("vat-relief", formData);
+            var response = await Http.PostAsync("api/vat-relief", formData);
 
             response.EnsureSuccessStatusCode();
 

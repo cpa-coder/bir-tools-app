@@ -11,5 +11,4 @@ RUN dotnet publish -c release "Server\BirToolsApp.Server.csproj" -o /publish
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 WORKDIR /publish
 COPY --from=build /publish .
-EXPOSE 5000
 ENTRYPOINT ["dotnet", "BirToolsApp.Server.dll"]

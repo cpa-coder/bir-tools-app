@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using BirToolsApp.Server.VatReliefServices.Unidecode;
+using BirToolsApp.Server.VatReliefs.Unidecode;
 
-namespace BirToolsApp.Server.VatReliefServices.Utils;
+namespace BirToolsApp.Server.VatReliefs.Utils;
 
 internal static class Extensions
 {

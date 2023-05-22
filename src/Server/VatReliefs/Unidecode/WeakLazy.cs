@@ -1,4 +1,4 @@
-namespace BirToolsApp.Server.VatReliefServices.Unidecode;
+namespace BirToolsApp.Server.VatReliefs.Unidecode;
 
 public abstract class WeakLazy<T> where T : class
 {

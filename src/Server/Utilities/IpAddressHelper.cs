@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace BirToolsApp.Server;
+namespace BirToolsApp.Server.Utilities;
 
 public static class IpAddressHelper
 {

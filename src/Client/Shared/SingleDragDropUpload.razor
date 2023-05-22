@@ -33,7 +33,7 @@
     private string _dragClass = DefaultDragClass;
     private readonly List<string> _fileNames = new();
 
-    private string SetDragDropLabel() => $"Drag and drop {FileName} file here or click";
+    private string SetDragDropLabel() => $"Drag and drop {FileName} file here or tap to select a file";
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs e)
     {

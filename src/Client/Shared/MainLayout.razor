@@ -6,16 +6,17 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(_ => DrawerToggle())"/>
+    <MudAppBar Style="@AppBarStyle" Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="@(_isDarkMode ? Color.Inherit : Color.Dark)" Edge="Edge.Start" OnClick="@(_ => DrawerToggle())"/>
         <MudSpacer/>
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank"/>
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank"/>
+        <MudTooltip Text="Source Code">
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="@(_isDarkMode ? Color.Inherit : Color.Dark)" Link="https://github.com/cpa-coder/bir-tools-app.git" Target="_blank"/>
+        </MudTooltip>
         <MudTooltip Text="@ThemeSwitchTooltip()">
-            <MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="@ThemeLabel()"/>
+            <MudToggleIconButton @bind-Toggled="@_isDarkMode" T="bool" Color="@(_isDarkMode ? Color.Inherit : Color.Dark)" Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode"/>
         </MudTooltip>
     </MudAppBar>
-    <MudDrawer @bind-Open="                        _drawerOpen" Elevation="1">
+    <MudDrawer  @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">BIR Tools</MudText>
         </MudDrawerHeader>
@@ -29,6 +30,13 @@
 </MudLayout>
 
 @code {
+
+    private const string SecondaryLight = "#FFFFFF";
+    private const string SecondaryDark = "#27272F";
+    
+    private string ThemeBackground => _isDarkMode ? SecondaryDark : SecondaryLight;
+    private string ShadowColor => _isDarkMode ? "0  5px 15px 0 #27272F7F" : "8px  5px 15px 0 #27272F3F";
+    private string AppBarStyle => $"background:{ThemeBackground}3F; backdrop-filter: blur( 10px ); -webkit-backdrop-filter: blur( 10px ); box-shadow: {ShadowColor};";
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,12 +52,9 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private string ThemeLabel() => _isDarkMode ? "Dark" : "Light";
-
     private string ThemeSwitchTooltip()
     {
         var label = _isDarkMode ? "Light" : "Dark";
         return $"Switch to {label} theme";
     }
-
 }

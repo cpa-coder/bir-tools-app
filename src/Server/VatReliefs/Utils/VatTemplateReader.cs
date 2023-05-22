@@ -1,8 +1,8 @@
-﻿using BirToolsApp.Server.VatReliefServices.Models;
+﻿using BirToolsApp.Server.VatReliefs.Models;
 using BirToolsApp.Shared;
 using ClosedXML.Excel;
 
-namespace BirToolsApp.Server.VatReliefServices.Utils;
+namespace BirToolsApp.Server.VatReliefs.Utils;
 
 public class VatTemplateReader
 {
